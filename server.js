@@ -1,0 +1,72 @@
+const express = require('express');
+const morgan = require('morgan');
+
+const app = express();
+
+app.use(morgan('dev'));
+
+app.listen(3000, () => {
+    console.log('litsening on port 3000');
+});
+
+//Excercise 1
+
+app.get('/what', (req, res)=>{
+
+    const name = req.query.name
+
+    res.send(`<h1>"What a delight it is to see you once more, ${name}."</h1>`);
+});
+
+//http://localhost:3000/what?name=mahdi
+
+//Excercise 2
+
+app.get('/roll', (req, res)=>{
+
+    const number = req.query.number
+
+    if(number === Number){
+        res.send('<h1>You rolled a ${number}.</h1>');
+    }
+    else {res.send('<h1>You must specify a number.</h1>');}
+});
+
+//http://localhost:3000/roll?number=potato
+
+//Excercise 3
+
+const collectibles = [
+    { name: 'shiny ball', price: 5.95 },
+    { name: 'autographed picture of a dog', price: 10 },
+    { name: 'vintage 1970s yogurt SOLD AS-IS', price: 0.99 }
+  ];
+
+  app.get('/collectibles/:number', (req, res) => {
+
+    const index = req.params.number
+    const item = collectibles[index] 
+
+    if (item){
+    res.send(`<h1>You want the ${item.name}? For ${item.price}, it can be yours!</h1>`);
+    }
+    else {
+        res.send('<h1>Sorry, we don\'t have that item.</h1>');
+    }
+});
+
+//http://localhost:3000/collectibles/1
+
+//Excercise 4
+
+const shoes = [
+    { name: "Birkenstocks", price: 50, type: "sandal" },
+    { name: "Air Jordans", price: 500, type: "sneaker" },
+    { name: "Air Mahomeses", price: 501, type: "sneaker" },
+    { name: "Utility Boots", price: 20, type: "boot" },
+    { name: "Velcro Sandals", price: 15, type: "sandal" },
+    { name: "Jet Boots", price: 1000, type: "boot" },
+    { name: "Fifty-Inch Heels", price: 175, type: "heel" }
+];
+
+
