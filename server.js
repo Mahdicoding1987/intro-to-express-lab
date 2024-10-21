@@ -5,7 +5,7 @@ const app = express();
 
 app.use(morgan('dev'));
 
-app.listen(3000, () => {
+app.listen(9000, () => {
     console.log('litsening on port 3000');
 });
 
@@ -69,4 +69,25 @@ const shoes = [
     { name: "Fifty-Inch Heels", price: 175, type: "heel" }
 ];
 
+app.get('/shoes', (req, res) => {
+
+    const type = req.query.type
+    const minPrice = req.query["min-price"]
+    const maxPrice = req.query["max-price"]
+    let filteredShoes = shoes;
+    if (type){
+
+        filteredShoes = filteredShoes.filter((shoe) => shoe.type === type);
+    }
+    if (minPrice){
+
+        filteredShoes = filteredShoes.filter((shoe) => shoe.price > minPrice);
+
+    }
+    if (maxPrice){
+        
+        filteredShoes = filteredShoes.filter((shoe) => shoe.price < maxPrice);
+    }
+    res.send(filteredShoes)
+})
 
